@@ -3,6 +3,7 @@
 import { LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { ComboBox, ComboBoxFilterChangeEvent } from '@progress/kendo-react-dropdowns';
+import { Grid, GridColumn } from '@progress/kendo-react-grid';
 import { FilterDescriptor, filterBy } from '@progress/kendo-data-query';
 import { useState } from "react";
 
@@ -79,10 +80,12 @@ export const loader: LoaderFunction = async () => {
     return { names };
 };
 
+
+
 //se crea una funcion que retorna un componente ComboBox (lo que ve el usuario)
 export default function ComboBoxPage() {
 
-    const { names } = useLoaderData<{ names: { id: number, name: string }[] }>();
+    const { names } = useLoaderData<{ names: { name: {id:number; firstname: string; lastname: string } }[] }>();
 
     const [value, setValue] = useState('');
 
@@ -107,21 +110,41 @@ export default function ComboBoxPage() {
     };
 
     
- 
+    
     //se retorna el componente ComboBox con los nombres y el filtro
+    
+  const CustomCell = (props: { dataItem: {
+      phone: any;
+      password: any;
+      username: any; 
+      id: any; 
+      email: any; 
+}; }) => {
+      return (
+          <td>
+              <button onClick={() => alert(`Edit ${props.dataItem.id, props.dataItem.email, props.dataItem.username, props.dataItem.password, props.dataItem.phone}`)}>Editar</button>
+              <button onClick={() => alert(`Delete ${props.dataItem.id}`)}>Borrar</button>
+          </td>
+      );
+  };
 
-    return (
-        <div>
-            <h1>Names List</h1>
-            <ul>
-                {names.map((item) => (
-                    <li key={item.id}>{item.name}</li>
-                ))}
-            </ul>
-            <ComboBox data={data} filterable={true}
-                id="sport" textField="name" allowCustom={true} onChange={handleChange} onFilterChange={handleFilterChange} placeholder="Please select ..."/>
-        </div>
-    );
+  return (
+      <div>
+          
+          <Grid
+              data={data}
+              style={{ height: '400px' }}
+          >
+              <GridColumn field="id" title="ID" width="50px" />
+              <GridColumn field="email" title="Email" />
+              <GridColumn field="username" title="Username" />
+              <GridColumn field="password" title="Password" />
+              <GridColumn field="phone" title="Phone" />
+              <GridColumn field="custom" title="Actions" cell={CustomCell} />
+          </Grid>
+      </div>
+  );
+    
 }
 
 //filtro de busqueda
