@@ -122,8 +122,18 @@ export default function ComboBoxPage() {
 }; }) => {
       return (
           <td>
-              <button onClick={() => alert(`Edit ${props.dataItem.id, props.dataItem.email, props.dataItem.username, props.dataItem.password, props.dataItem.phone}`)}>Editar</button>
-              <button onClick={() => alert(`Delete ${props.dataItem.id}`)}>Borrar</button>
+              <button onClick={() => alert(`Edit :
+                ${props.dataItem.id}
+                ${props.dataItem.email}
+                ${props.dataItem.username}
+                ${props.dataItem.password}
+                ${props.dataItem.phone}`)}>Editar</button>
+              <button onClick={() => alert(`Delete: 
+                ${props.dataItem.id}
+                ${props.dataItem.email}
+                ${props.dataItem.username}
+                ${props.dataItem.password}
+                ${props.dataItem.phone}`)}>Borrar</button>
           </td>
       );
   };
@@ -133,7 +143,7 @@ export default function ComboBoxPage() {
           
           <Grid
               data={data}
-              style={{ height: '400px' }}
+              style={{ height: '300px' }}
           >
               <GridColumn field="id" title="ID" width="50px" />
               <GridColumn field="email" title="Email" />
